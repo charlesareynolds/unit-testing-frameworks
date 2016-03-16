@@ -32,19 +32,20 @@ LIBDIRS  = $(shell $(ROSE_HOME)/bin/rose-config libdirs)
 MOSTLYCLEANFILES =
 
 ##############################################################################
-# Assuming your source code is "BuildIntValTest.C" to build an executable named "BuildIntValTest".
+TEST = BuildIntValTest
 
-all: BuildIntValTest
+all: $(TEST)
 
-BuildIntValTest.o: BuildIntValTest.cpp
+$(TEST).o: $(TEST).cpp
 	$(CXX) $(CPPFLAGS) $(CFLAGS) -o $@ -c $^
 
-BuildIntValTest: BuildIntValTest.o
+$(TEST): $(TEST).o
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $^
-	@echo "Remember to set:"
-	@echo "  LD_LIBRARY_PATH=$(LIBDIRS):$$LD_LIBRARY_PATH"
 
-MOSTLYCLEANFILES += BuildIntValTest BuildIntValTest.o
+check:
+	./$(TEST)
+
+MOSTLYCLEANFILES += $(TEST) $(TEST).o
 
 ##############################################################################
 # Standard boilerplate
