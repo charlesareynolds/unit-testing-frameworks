@@ -19,6 +19,7 @@ $ make clean
 ## Example Output
 
 ```bash
+$ make check
 ./BuildIntValTest
 ===============================================================================
 All tests passed (6 assertions in 2 test cases)
