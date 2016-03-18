@@ -29,28 +29,15 @@ CFLAGS   = $(shell $(ROSE_HOME)/bin/rose-config cflags)
 LDFLAGS  = $(shell $(ROSE_HOME)/bin/rose-config ldflags)
 LIBDIRS  = $(shell $(ROSE_HOME)/bin/rose-config libdirs)
 
-MOSTLYCLEANFILES =
 
 ##############################################################################
-TEST = BuildIntValTest
 
-all: $(TEST)
+all: BuildIntValTest
 
-$(TEST).o: $(TEST).cpp
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -o $@ -c $^
-
-$(TEST): $(TEST).o
-	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $^
-
-check:
-	./$(TEST)
-
-MOSTLYCLEANFILES += $(TEST) $(TEST).o
-
-##############################################################################
-# Standard boilerplate
+check: BuildIntValTest
+	LD_LIBRARY_PATH=$(LIBDIRS) ./BuildIntValTest $(TEST_ARG)
 
 .PHONY: clean
 clean:
-	rm -f $(MOSTLYCLEANFILES)
+	rm -f BuildIntValTest
 
