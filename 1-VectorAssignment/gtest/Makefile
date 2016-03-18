@@ -24,42 +24,19 @@
 
 # Standard C++ compiler stuff (see rose-config --help)
 CXX      = $(shell $(ROSE_HOME)/bin/rose-config cxx)
-CPPFLAGS = $(shell $(ROSE_HOME)/bin/rose-config cppflags)
+CPPFLAGS = $(shell $(ROSE_HOME)/bin/rose-config cppflags) -I.. -fpermissive
 CFLAGS   = $(shell $(ROSE_HOME)/bin/rose-config cflags)
 LDFLAGS  = $(shell $(ROSE_HOME)/bin/rose-config ldflags)
 LIBDIRS  = $(shell $(ROSE_HOME)/bin/rose-config libdirs)
 
-MOSTLYCLEANFILES =
-
 ##############################################################################
-TEST_PASS = VectorAssignmentTestPass
-TEST_FAIL = VectorAssignmentTestFail
 
-all: $(TEST_PASS) $(TEST_FAIL)
+all: VectorTests
 
-$(TEST_PASS).o: $(TEST_PASS).cpp
-	$(CXX) -fpermissive $(CPPFLAGS) $(CFLAGS) -o $@ -c $^
-
-$(TEST_PASS): $(TEST_PASS).o
-	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $^
-
-$(TEST_FAIL).o: $(TEST_FAIL).cpp
-	$(CXX) -fpermissive $(CPPFLAGS) $(CFLAGS) -o $@ -c $^
-
-$(TEST_FAIL): $(TEST_FAIL).o
-	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $^
-
-check: $(TEST_PASS) $(TEST_FAIL)
-	./$(TEST_PASS)
-	./$(TEST_FAIL)
-
-MOSTLYCLEANFILES += $(TEST_PASS) $(TEST_PASS).o
-MOSTLYCLEANFILES += $(TEST_FAIL) $(TEST_FAIL).o
-
-##############################################################################
-# Standard boilerplate
+check: VectorTests
+	LD_LIBRARY_PATH=$(LIBDIRS) ./VectorTests
 
 .PHONY: clean
 clean:
-	rm -f $(MOSTLYCLEANFILES)
+	rm -f VectorTests
 

@@ -1,7 +1,7 @@
 ## Build the tests
 
 ```bash
-$ make -j2
+$ make
 ```
 
 ## Run the tests

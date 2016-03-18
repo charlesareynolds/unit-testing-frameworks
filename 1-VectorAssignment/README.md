@@ -1,5 +1,7 @@
 ## Vector Assignment Unit Test
 
+### Summary
+
 std::vector is a stand-in for some ROSE template class.  We want to
 check that this class has a proper assignment operator with strong
 exception safety guarantee. Therefore, test both of these:
@@ -22,3 +24,13 @@ e. T has been tested already
 f. whatever features of std::vector you need have been tested already
 
 If in doubt, look at the sawyer test for guidance.
+
+### Support Utilities
+
+Your unit tests will need to include the supporting types and functions provided in `VectorUnitTest.h`. For example:
+
+```bash
+// VectorTests.C
+#include "../VectorUnitTest.h"
+```
+
