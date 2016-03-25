@@ -24,7 +24,28 @@
 
 # Standard C++ compiler stuff (see rose-config --help)
 #CXX      = $(shell $(ROSE_HOME)/bin/rose-config cxx)
-#CPPFLAGS = $(shell $(ROSE_HOME)/bin/rose-config cppflags) -I.. -fperm# A sample Makefile for building Google Test and using it in user
+#CPPFLAGS = $(shell $(ROSE_HOME)/bin/rose-config cppflags) -I.. -fpermissive
+#CFLAGS   = $(shell $(ROSE_HOME)/bin/rose-config cflags)
+#LDFLAGS  = $(shell $(ROSE_HOME)/bin/rose-config ldflags)
+#LIBDIRS  = $(shell $(ROSE_HOME)/bin/rose-config libdirs)
+
+##############################################################################
+
+#all: VectorTests
+
+#check: VectorTests
+#	LD_LIBRARY_PATH=$(LIBDIRS) ./VectorTests
+
+#.PHONY: clean
+#clean:
+#	rm -f VectorTests
+
+##############################################################################
+# Below is copied from /g/g17/charles/code/googletest/googletest/make/Makefile, 
+# where /g/g17/charles/code/googletest is a git clone of https://github.com/google/googletest.git
+##############################################################################
+
+# A sample Makefile for building Google Test and using it in user
 # tests.  Please tweak it to suit your environment and project.  You
 # may want to move it to your project's root directory.
 #
@@ -105,25 +126,5 @@ sample1_unittest.o : $(USER_DIR)/sample1_unittest.cc \
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1_unittest.cc
 
 sample1_unittest : sample1.o sample1_unittest.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@issive
-#CFLAGS   = $(shell $(ROSE_HOME)/bin/rose-config cflags)
-#LDFLAGS  = $(shell $(ROSE_HOME)/bin/rose-config ldflags)
-#LIBDIRS  = $(shell $(ROSE_HOME)/bin/rose-config libdirs)
-
-##############################################################################
-
-#all: VectorTests
-
-#check: VectorTests
-#	LD_LIBRARY_PATH=$(LIBDIRS) ./VectorTests
-
-#.PHONY: clean
-#clean:
-#	rm -f VectorTests
-
-
-# Below is copied from /g/g17/charles/code/googletest/googletest/make/Makefile, 
-# where /g/g17/charles/code/googletest is a git clone of https://github.com/google/googletest.git
-
-
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
