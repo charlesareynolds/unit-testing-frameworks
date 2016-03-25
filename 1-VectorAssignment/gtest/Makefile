@@ -34,7 +34,7 @@
 # https://github.com/google/googletest.git:
 ##############################################################################
 
-GTEST_DIR = /g/g17/charles/code/googletest/googletest
+GTEST_DIR = ../../../googletest/googletest
 
 # Where to find user code.
 USER_DIR = .
