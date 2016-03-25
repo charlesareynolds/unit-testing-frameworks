@@ -30,23 +30,10 @@
 #LIBDIRS  = $(shell $(ROSE_HOME)/bin/rose-config libdirs)
 
 ##############################################################################
-
-#all: VectorTests
-
-#check: VectorTests
-#	LD_LIBRARY_PATH=$(LIBDIRS) ./VectorTests
-
-#.PHONY: clean
-#clean:
-#	rm -f VectorTests
-
-##############################################################################
-# Below is copied from /g/g17/charles/code/googletest/googletest/make/Makefile, 
-# where /g/g17/charles/code/googletest is a git clone of https://github.com/google/googletest.git
+# Below was derived from googletest/make/Makefile in 
+# https://github.com/google/googletest.git:
 ##############################################################################
 
-# Points to the root of Google Test, relative to where this file is.
-# Remember to tweak this if you move this file.
 GTEST_DIR = /g/g17/charles/code/googletest/googletest
 
 # Where to find user code.
@@ -62,7 +49,7 @@ CXXFLAGS += -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = sample1_unittest
+TESTS = sample1_unittest VectorTests
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -73,9 +60,15 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 
 all : $(TESTS)
 
-clean :
+check: $(TESTS)
+	LD_LIBRARY_PATH=$(LIBDIRS) ./sample1_unittest
+	LD_LIBRARY_PATH=$(LIBDIRS) ./VectorTests
+
+.PHONY: clean
+clean:
 	rm -f $(TESTS) gtest.a gtest_main.a *.o
 
+###
 # Builds gtest.a and gtest_main.a.
 
 # Usually you shouldn't tweak such internal variables, indicated by a
@@ -100,6 +93,7 @@ gtest.a : gtest-all.o
 gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
+###
 # Builds a sample test.  A test should link with either gtest.a or
 # gtest_main.a, depending on whether it defines its own main()
 # function.
@@ -113,4 +107,15 @@ sample1_unittest.o : $(USER_DIR)/sample1_unittest.cc \
 
 sample1_unittest : sample1.o sample1_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+##############################################################################
+VectorTests.o : $(USER_DIR)/VectorTests.C \
+                $(USER_DIR)/../VectorUnitTest.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/VectorTests.C
+
+VectorTests : VectorTests.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+
+
 

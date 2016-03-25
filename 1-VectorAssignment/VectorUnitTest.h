@@ -4,6 +4,7 @@
 
 #include <boost/foreach.hpp>
 #include <exception>
+#include <stdexcept>
 #include <iostream>
 #include <string>
 #include <vector>
